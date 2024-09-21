@@ -6,23 +6,27 @@
     <title>Spotify Login</title>
     <script>
         function getAccessToken() {
-            const params = new URLSearchParams(window.location.hash.substr(1)); // Get hash and strip the #
-            const token = params.get('access_token'); // Get access token
+            const params = new URLSearchParams(window.location.hash.substr(1));
+            const token = params.get('access_token');
 
             if (token) {
-                // Log the token for now
                 console.log('Access Token:', token);
-
-                // You can use fetch or XMLHttpRequest to send the token to your server or Unity
-                // For example:
-                // fetch('YOUR_UNITY_SERVER_ENDPOINT', {
-                //     method: 'POST',
-                //     body: JSON.stringify({ accessToken: token }),
-                //     headers: { 'Content-Type': 'application/json' }
-                // });
+                sendTokenToWebhook(token);
             } else {
                 console.error('Access token not found');
             }
+        }
+
+        function sendTokenToWebhook(token) {
+            fetch('https://webhook.site/aa7a120f-6a64-4ce0-86e3-ee800aad28f5', { // Replace with your webhook URL
+                method: 'POST',
+                body: JSON.stringify({ accessToken: token }),
+                headers: { 'Content-Type': 'application/json' }
+            }).then(response => {
+                console.log('Token sent to webhook:', response);
+            }).catch(error => {
+                console.error('Error sending token:', error);
+            });
         }
 
         window.onload = getAccessToken;

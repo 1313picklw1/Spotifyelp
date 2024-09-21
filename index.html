@@ -6,16 +6,20 @@
     <title>Spotify Login</title>
     <script>
         function getAccessToken() {
-            const params = new URLSearchParams(window.location.hash);
-            const token = params.get('#access_token');
+            const params = new URLSearchParams(window.location.hash.substr(1)); // Get hash and strip the #
+            const token = params.get('access_token'); // Get access token
 
             if (token) {
-                // Redirect to a Unity WebRequest or log the token
-                // For now, just log it
+                // Log the token for now
                 console.log('Access Token:', token);
-                
-                // Here, you can also send the token back to your Unity game
-                // by calling a Unity WebRequest or similar method
+
+                // You can use fetch or XMLHttpRequest to send the token to your server or Unity
+                // For example:
+                // fetch('YOUR_UNITY_SERVER_ENDPOINT', {
+                //     method: 'POST',
+                //     body: JSON.stringify({ accessToken: token }),
+                //     headers: { 'Content-Type': 'application/json' }
+                // });
             } else {
                 console.error('Access token not found');
             }

